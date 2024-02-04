@@ -37,14 +37,17 @@ jobs:
       - name: Copy files into install dir
         run: cp README.md target/release/martypc install
 
+      - name: Rename install directory
+        run: mv install martypc
+
       - name: Create artifact directory
         run: mkdir artifacts
 
-      - name: Create artifact from install dir
-        run: cd install && zip -r ../artifacts/martypc-linux.zip .
+      - name: Create artifact from install directory
+        run: tar zcvf artifacts/martypc.tar.gz martypc
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: martypc-linux.zip
-          path: artifacts/martypc-linux.zip
+          name: martypc-linux.tar.gz
+          path: artifacts/martypc.tar.gz
