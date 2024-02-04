@@ -43,3 +43,8 @@ jobs:
       - name: Create artifact from install dir
         run: cd install && zip -r ../artifacts/martypc-linux.zip .
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: martypc-linux.zip
+          path: artifacts/martypc-linux.zip
