@@ -1,0 +1,39 @@
+name: Linux
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_and_test:
+    name: martypc
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        toolchain:
+          - stable
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install rust toolchain
+        run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+
+      - name: Cargo build
+        run: cargo build -r --features ega
+
+      - name: Copy files into install dir
+        run: cp README.md target/release/martypc install
+
+      - name: Create artifact directory
+        run: mkdir artifacts
+
+      - name: Create artifact from install dir
+        run: cd install && zip -r ../artifacts/martypc-linux.zip .
+
