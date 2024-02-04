@@ -43,11 +43,14 @@ jobs:
       - name: Create artifact directory
         run: mkdir artifacts
 
+      # GitHub zips all artifacts, losing file permissions.
+      # We'll need to tar the directory in order to
+      # preserve the file permissions
       - name: Create artifact from install directory
-        run: tar zcvf artifacts/martypc.tar.gz martypc
+        run: tar cvf artifacts/martypc.tar martypc
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: martypc-linux.tar.gz
-          path: artifacts/martypc.tar.gz
+          name: 'martypc-linux-${{ github.run_number }}'
+          path: artifacts/martypc.tar
