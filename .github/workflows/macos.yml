@@ -1,0 +1,52 @@
+name: macOS
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  macos-arm:
+    name: martypc
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+#      - name: Install rust toolchain
+#        run: rustup update stable && rustup default stable
+
+#      - name: Install dependencies
+#        run: >-
+#          brew install
+#          package1
+#          package2
+
+      - name: Cargo build
+        run: cargo build -r --features ega
+
+      - name: Copy files into install dir
+        run: cp README.md target/release/martypc install
+
+      - name: Rename install directory
+        run: mv install martypc
+
+      - name: Create artifact directory
+        run: mkdir artifacts
+
+      # GitHub zips all artifacts, losing file permissions.
+      # We'll need to tar the directory in order to
+      # preserve the file permissions
+      - name: Create artifact from install directory
+        run: tar cvf artifacts/martypc.tar martypc
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'martypc-${{ github.job }}-${{ github.run_number }}'
+          path: artifacts/martypc.tar
