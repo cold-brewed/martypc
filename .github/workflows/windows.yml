@@ -48,5 +48,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'martypc-windows-${{ github.run_number }}'
+          name: 'martypc-windows-gha${{ github.run_number }}'
           path: martypc

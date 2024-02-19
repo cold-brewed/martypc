@@ -39,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'martypc-${{ github.job }}-${{ github.run_number }}'
+          name: 'martypc-${{ github.job }}-gha${{ github.run_number }}'
           path: artifacts/martypc.tar
 
   macos-x86:
@@ -73,5 +73,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'martypc-${{ github.job }}-${{ github.run_number }}'
+          name: 'martypc-${{ github.job }}-gha${{ github.run_number }}'
           path: artifacts/martypc.tar

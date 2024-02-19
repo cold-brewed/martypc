@@ -45,5 +45,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'martypc-linux-${{ github.run_number }}'
+          name: 'martypc-linux-gha${{ github.run_number }}'
           path: artifacts/martypc.tar
